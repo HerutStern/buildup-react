@@ -7,6 +7,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import BuildingPermits from './BuildingPermits/BuildingPermits';
 import NewBuildingPermit from './NewBuildingPermit/NewBuildingPermit';
 import Home from './Home/Home';
+import Files from './Files/Files';
+import Template from './Template/Template';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +24,16 @@ const router = createBrowserRouter([
         element: <BuildingPermits/>
       },
       {
-        path: '/newBuilding-permit',
+        path: '/new-building-permit',
         element: <NewBuildingPermit/>
+      },
+      {
+        path: '/files',
+        element: <Files />
+      },
+      {
+        path: '/template',
+        element: <Template/>
       }
 ]}
 ])
