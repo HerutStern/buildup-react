@@ -12,9 +12,9 @@ const NewBuildingPermit = () => {
           SEND A NEW BUILDING PERMIT
         </Typography>
         <div style={{width: "90em" ,backgroundColor: "black"}}>
-          <p style={{color: "white",padding: "2em"}}>FORM</p>
+          <p style={{color: "white",padding: "2em"}}>SECTIONS:</p>
+          <p style={{color: "white",padding: "2em"}}>FILES:</p>
         </div>
-        
       </Stack>
     </>
   )

@@ -11,8 +11,8 @@ const Files = () => {
   return(
     <>
 
-      <Stack spacing="3em" direction="column" useFlexGap flexWrap="wrap" alignItems={"center"}>
-      <Typography level="display2">FILES</Typography>
+      <Stack spacing="2em" direction="column" useFlexGap alignItems={"center"}>
+      <Typography level="display1">FILES</Typography>
       <Stack direction={"column"} alignItems={"center"}>
         <div style={{
           width: "30em",
@@ -21,12 +21,12 @@ const Files = () => {
           cursor:"pointer"
           }}
         >
-          <Stack paddingBottom={"2em"} justifyContent={"center"} direction={"row"} spacing={"1em"}>
+          <Stack justifyContent={"center"} direction={"row"} spacing={"1em"}>
             <Typography
-              level="h4" 
+              level="h3" 
               sx={{color: "black"}}
               >
-                Upload a new file for your conpamy
+                Upload a new file
             </Typography>
 
             <FileUploadOutlinedIcon 
@@ -45,8 +45,24 @@ const Files = () => {
             width: "100%"}} />
         </div>
       </Stack>
+
       <Box sx={{backgroundColor: 'black', width: "auto"}}>
       <Stack direction={"row"}>
+        
+        <p style={{paddingLeft: "2em", paddingRight: "2em", color: "white", fontSize:"1.5em"}}>File name</p>
+        <Button component="label">
+          <a href="" target="_blank" download>
+              <FileDownloadOutlinedIcon fontSize="large" 
+              sx={{color: "white"}}/>
+          </a>
+        </Button>
+        <Button>
+          <DeleteIcon fontSize="medium" 
+              sx={{color: "white"}}/>
+        </Button>   
+ 
+        </Stack>
+        <Stack direction={"row"}>
         
         <p style={{paddingLeft: "2em", paddingRight: "2em", color: "white", fontSize:"1.5em"}}>File name</p>
         <Button component="label">

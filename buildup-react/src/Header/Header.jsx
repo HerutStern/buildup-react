@@ -14,55 +14,63 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { InputBase, alpha, styled } from '@mui/material';
+import { SetUserContext, UserContext } from '../Context/UserContext';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Login', 'Signup', 'Logout'];
+  const settingsMapping = {
+    Home: '/',
+    'Login': '/login',
+    'Signup': '/signup',
+    'Logout': '/'
+  }
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+// const Search = styled('div')(({ theme }) => ({
+//   position: 'relative',
+//   borderRadius: theme.shape.borderRadius,
+//   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//   '&:hover': {
+//     backgroundColor: alpha(theme.palette.common.white, 0.25),
+//   },
+//   marginLeft: 0,
+//   width: '100%',
+//   [theme.breakpoints.up('sm')]: {
+//     marginLeft: theme.spacing(1),
+//     width: 'auto',
+//   },
+// }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: '100%',
+//   position: 'absolute',
+//   pointerEvents: 'none',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+// }));
+
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   color: 'inherit',
+//   '& .MuiInputBase-input': {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create('width'),
+//     width: '100%',
+//     [theme.breakpoints.up('sm')]: {
+//       width: '12ch',
+//       '&:focus': {
+//         width: '20ch',
+//       },
+//     },
+//   },
+// }));
 
 
 const pages = ['Home', 'Building Permits', 'SEND A New Building Permit', 'BUILDING PERMIT  requirements', 'Files']
   const pageMapping = {
-      Home: '/',
+      'Home': '/',
       'Building Permits': '/building-permits',
       'SEND A New Building Permit': '/new-building-permit',
       'BUILDING PERMIT  requirements': '/template',
@@ -71,6 +79,9 @@ const pages = ['Home', 'Building Permits', 'SEND A New Building Permit', 'BUILDI
 
   
 const Header = () => {
+    const setUser = React.useContext(SetUserContext)
+    const user = React.useContext(UserContext)
+    console.log(user)
 
     const navigate = useNavigate()
 
@@ -93,7 +104,14 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
+    navigate(settingsMapping[setting])
+    if (setting==='Logout'){
+      setUser(
+        {user: {}}
+      )
+    }
+    console.log(user)
     setAnchorElUser(null);
   };
 
@@ -195,7 +213,7 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

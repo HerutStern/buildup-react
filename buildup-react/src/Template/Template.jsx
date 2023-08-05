@@ -6,7 +6,7 @@ const Template = () => {
     <>
       <Stack direction={"row"} justifyContent={"space-evenly"}>
         <Typography sx={{paddingRight: "3em"}} level="display2" variant="plain" >
-          BUILDING PERMIT TEMPLATE
+          BUILDING PERMIT REQUIREMENTS
         </Typography>
         <div style={{width: "90em" ,backgroundColor: "black"}}>
           <p style={{color: "white",padding: "2em"}}>SECTIONS:</p>

@@ -9,6 +9,9 @@ import NewBuildingPermit from './NewBuildingPermit/NewBuildingPermit';
 import Home from './Home/Home';
 import Files from './Files/Files';
 import Template from './Template/Template';
+import Login from './Login/Login';
+import Signup from './Signup/Signup';
+import UserProvider from './Context/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -35,11 +38,24 @@ const router = createBrowserRouter([
         path: '/template',
         element: <Template/>
       }
-]}
+      
+]},
+  {
+          path: '/login',
+          element: <Login/>
+        },
+        {
+          path: '/signup',
+          element: <Signup/>
+        }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<RouterProvider router={router} />);
+root.render(
+  <UserProvider>
+    <RouterProvider router={router} />
+  </UserProvider>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
