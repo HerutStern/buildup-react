@@ -10,7 +10,7 @@ const Contact = () => {
   return(
     <>
     <AppBar position="fixed" style={{boxShadow: 'none'}} 
-    sx={{background: 'white',  top: '95%', bottom: 0 }}>
+    sx={{background: 'white',  top: '92%', bottom: 0 }}>
       <Divider />
       <Stack direction="row" alignItems={"center"} justifyContent={"center"}>
         <Typography style={{"white-space": "pre"}} 

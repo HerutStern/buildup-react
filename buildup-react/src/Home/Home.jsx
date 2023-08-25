@@ -4,10 +4,10 @@ import { Stack } from "@mui/material"
 const Home = () => {
   return(
     <>
-      <Stack direction={"row"} spacing={"4em"} justifyContent={"space-evenly"}>
+      <Stack direction={{lg: "row",md: "row", xs: "column"}} spacing={"2em"} justifyContent={"space-evenly"}>
       
-      <p style={{width: "40em", "white-space": "normal"}}>
-      <Typography level="display1" variant="plain" >
+      <p style={{width: "100%", "white-space": "normal"}}>
+      <Typography level="display2" variant="plain" >
         Welcome!
       </Typography > <br/>
       Meet the world of building permits management.<br/>
@@ -17,8 +17,8 @@ const Home = () => {
       Sounds good?!<br/>
       Join us at BuildUp, click SignUp and all of this can come true today.
       </p>
-      <img style={{ height: "auto", width: "40em", "object-fit": "contain"}}
-               src="https://i.ibb.co/HVdMP5P/buildup2.jpg" alt="buildup" border="0"/>
+      <img style={{paddingTop: "3em",height: "15em", "object-fit": "contain"}}
+               src="https://storage.googleapis.com/buildup/buildupS.jpg" alt="buildup" border="0"/>
 
       </Stack>
     </>

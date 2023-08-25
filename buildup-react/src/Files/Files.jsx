@@ -11,9 +11,9 @@ const Files = () => {
   return(
     <>
 
-      <Stack spacing="2em" direction="column" useFlexGap alignItems={"center"}>
+      <Stack spacing="2em" direction="column" useFlexGap justifyContent={"center"} alignItems={"center"}>
       <Typography level="display1">FILES</Typography>
-      <Stack direction={"column"} alignItems={"center"}>
+      <Stack direction={"column"} justifyContent={"center"} alignItems={"center"}>
         <div style={{
           width: "30em",
           position:"relative",
@@ -21,7 +21,7 @@ const Files = () => {
           cursor:"pointer"
           }}
         >
-          <Stack justifyContent={"center"} direction={"row"} spacing={"1em"}>
+          <Stack justifyContent={"center"} alignItems={"center"} direction={"row"} spacing={"1em"}>
             <Typography
               level="h3" 
               sx={{color: "black"}}

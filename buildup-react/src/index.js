@@ -12,6 +12,7 @@ import Template from './Template/Template';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import UserProvider from './Context/UserContext';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
 const router = createBrowserRouter([
   {
@@ -50,11 +51,27 @@ const router = createBrowserRouter([
         }
 ])
 
+// const myTheme = {
+//   palette: {
+//     primary: {
+//       main: '#000000',
+//     },
+//     secondary: {
+//       main: '#808080',
+//     },
+//   },
+  
+// }
+
+// const theme = createTheme(myTheme);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // <ThemeProvider theme={theme}>
+  // <CssBaseline />
   <UserProvider>
     <RouterProvider router={router} />
   </UserProvider>
+  // </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

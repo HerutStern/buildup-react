@@ -17,25 +17,24 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import SectionsFiles from './SectionsFiles/SectionsFiles';
 
 // open pmit files: <a href="file://///SERVER/directory/file.ext">file.ext</a>
 
 
 
-function createData(id, name, creation_date, status, approval_date, is_deleted,  company, user) {
+function createData(id, name, project_manager, creation_date, 
+  status, approval_date, is_deleted,  company) {
   return {
     id,
     name,
     status,
-    DETAILS: [
-      {
-        'CREATION DATE': creation_date,
-        'APPROVAL DATE': approval_date,
-        'PROJECT MANAGER': user,
-      }
-    ],
+    creation_date,
+    approval_date,
+    project_manager
   };
 }
+
 
 function Row(props) {
   const { row } = props;
@@ -57,55 +56,50 @@ function Row(props) {
           {row.id}
         </TableCell>
         <TableCell>
-          <Typography style={{'text-transform': 'uppercase'}} level="h5">{row.name}
+          <Typography align='left' style={{'text-transform': 'uppercase'}} level="h6">{row.name}
             </Typography>
           </TableCell>
+          <TableCell align='right'>
+          {row.project_manager}
+        </TableCell>
+        <TableCell align='right'>
+          {row.creation_date}
+        </TableCell>
+          <TableCell align='right'>
+          {row.approval_date}
+        </TableCell>
         <TableCell 
-        style={{color: row.status === 'APPROVED' ? 'green' : 
-        row.status === 'REJECTED' ? 'red' : 'black'}}
-         align="right">{row.status}</TableCell>
+         align="right">
+          <Typography level="h6"
+          style={{color: row.status === 'APPROVED' ? 'green' : 
+          row.status === 'REJECTED' ? 'red' : 'black'}}>
+          {row.status}
+         </Typography>
+          
+         </TableCell>
+         <TableCell  align="right">
+            {
+              row.status === 'PENDING' ? 
+              <>
+                <Button disabled={false} variant="plain" color="success">
+                  APPROVE
+                </Button>
+                <Button disabled={false} variant="plain" color="danger">
+                  REJECT
+                </Button>
+              </> : 
+              row.status === 'APPROVED' ? <></> :
+              row.status === 'REJECTED' ? <></> : <></>
+            }
+          </TableCell>
       </TableRow>
       <TableRow >
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingLeft: '15em', paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow style={{height: '5em'}}>
-                    <TableCell align='center'>PROJECT MANAGER</TableCell>
-                    <TableCell align="center">CREATION DATE</TableCell>
-                    <TableCell align="center">APPROVAL DATE</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.DETAILS.map((detailRow) => (
-                    <TableRow style={{height: '5em'}} key={detailRow['PROJECT MANAGER']}>
-                      <TableCell align='center'>
-                        {detailRow['PROJECT MANAGER']}
-                      </TableCell>
-                      <TableCell align='center'>{detailRow['CREATION DATE']}</TableCell>
-                      <TableCell align='center'>
-                        {detailRow['APPROVAL DATE'] === null ? '-' : detailRow['APPROVAL DATE']}
-                      </TableCell>
-                      <TableCell style={{width: '16em'}} align="left">
-                        {
-                          row.status === 'PENDING' ? 
-                          <>
-                            <Button disabled={false} variant="plain" color="success">
-                              APPROVE
-                            </Button>
-                            <Button disabled={false} variant="plain" color="danger">
-                              REJECT
-                            </Button>
-                          </> : 
-                          row.status === 'APPROVED' ? <></> :
-                          row.status === 'REJECTED' ? <></> : <></>
-                        }
-                        
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                {/* HERE PUT THE SECTIONS AND FILES. */}
+                <SectionsFiles/>
               </Table>
             </Box>
           </Collapse>
@@ -115,33 +109,17 @@ function Row(props) {
   );
 }
 
-// Row.propTypes = {
-//   row: PropTypes.shape({
-//     calories: PropTypes.number.isRequired,
-//     carbs: PropTypes.number.isRequired,
-//     fat: PropTypes.number.isRequired,
-//     history: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         amount: PropTypes.number.isRequired,
-//         customerId: PropTypes.string.isRequired,
-//         date: PropTypes.string.isRequired,
-//       }),
-//     ).isRequired,
-//     name: PropTypes.string.isRequired,
-//     price: PropTypes.number.isRequired,
-//     protein: PropTypes.number.isRequired,
-//   }).isRequired,
-// };
 
-
-// (id, name, creation_date, status, approval_date, is_deleted, company, user)
+// (id, name, creation_date, status, approval_date, company, user, 
+// sections, files)
 const rows = [
-  createData(1, 'name1', '12-8-2001', 'APPROVED', '12-8-2001', true, 1, 2),
-  createData(2, 'name2', '12-8-2001', 'APPROVED', '12-8-2001', false, 1, 3),
-  createData(3, 'name3', '12-8-2001', 'PENDING', null, false, 1, 5),
-  createData(4, 'name3', '12-8-2001', 'PENDING', null, false, 2, 3),
-  createData(5, 'name4', '12-8-2001', 'REJECTED', null, false, 2, 11),
+  createData(1, 'name1', 1, '12-8-2001', 'APPROVED', '12-8-2001', 2),
+  createData(2, 'name2', 1, '12-8-2001', 'APPROVED', '12-8-2001', 3),
+  createData(3, 'name3', 1, '12-8-2001', 'PENDING', null, 5),
+  createData(4, 'name3', 1, '12-8-2001', 'PENDING', null, 3),
+  createData(5, 'name4', 1, '12-8-2001', 'REJECTED', null, 11),
 ];
+
 
 const BuildingPermits = () => {
 
@@ -155,32 +133,43 @@ const BuildingPermits = () => {
 
   return(
     <>
-      <Stack direction={"column"} alignItems={"center"} >
-        <Typography level="display2" variant="plain" >
+      <Stack direction={"column"} justifyContent={"center"} alignItems={"center"} >
+        <Typography level="display2" variant="plain" style={{'text-align': 'center'}} >
           BUILDING PERMITS
         </Typography>
-        <Stack direction={"column"} spacing={"1em"} alignItems={"center"}>
-          <Box style={{"border-radius": "0px"}}
+        <Stack direction={"column"} spacing={"1em"} justifyContent={"center"}
+         alignItems={"center"}>
+          <Box style={{"border-radius": "0px"}} 
           sx={{
-            width: "25em",
-            py: 2,
-            display: 'grid',
-            gap: 2,
             alignItems: 'center',
-            flexWrap: 'wrap',
         }}
         />
         <Stack direction={"column"} spacing={"1em"}>
-        <Stack direction={"row"} spacing={"1em"}>
-          <TextField sx={{ width: "6em" }}
-          id="outlined-basic" label="ID" variant="outlined" />
-          <TextField sx={{ width: "26em" }}
+        <Stack direction={{lg: "row",md: "row", xs: "column"}} spacing={"1em"}>
+          <TextField
+          id="outlined-basic" label="ID" variant="outlined"
+          sx={{'& .MuiInputLabel-root': {color: 'black !important'},
+            '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+            '& .MuiOutlinedInput-root': {borderRadius: '0px'}
+          }} />
+          <TextField
+          sx={{width: "100%", '& .MuiInputLabel-root': {color: 'black !important'},
+          '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+          '& .MuiOutlinedInput-root': {borderRadius: '0px'}}}
            id="outlined-basic" label="BUILDING PERMIT NAME ..." variant="outlined" />
         </Stack>
-        <Stack justifyContent={'space-between'} direction={"row"} spacing={"1em"}>
-            <FormControl sx={{ width: "16em" }}>
-              <InputLabel id="demo-simple-select-autowidth-label">STATUS</InputLabel>
-              <Select 
+        <Stack direction={{lg: "row",md: "column", xs: "column"}} spacing={"1em"}>
+            <FormControl
+            sx={{width: '100%','& .MuiInputLabel-root': {color: 'black !important'},
+            '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+            '& .MuiOutlinedInput-root': {borderRadius: '0px'}
+          }}>
+              <InputLabel id="demo-simple-select-autowidth-label" 
+              sx={{'& .MuiInputLabel-root': {color: 'black !important'},
+              '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+              '& .MuiOutlinedInput-root': {borderRadius: '0px'}}}
+              >STATUS</InputLabel>
+              <Select
                 labelId="demo-simple-select-autowidth-label"
                 id="demo-simple-select-autowidth"
                 value={status}
@@ -196,19 +185,29 @@ const BuildingPermits = () => {
                 <MenuItem value={'REJECTED'}>REJECTED</MenuItem>
               </Select>
             </FormControl>
-            <TextField sx={{ width: "16em" }}
+            <TextField 
+            sx={{width: '100%', '& .MuiInputLabel-root': {color: 'black !important'},
+            '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+            '& .MuiOutlinedInput-root': {borderRadius: '0px'}}}
             id="outlined-basic" label="PROJECT MANAGER ..." variant="outlined" />
 
           </Stack>
-          <Stack direction={"row"} spacing={"1em"}>
+          <Stack direction={{lg: "row", md: "column", xs: "column"}} spacing={"1em"}>
            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker', 'DatePicker']}>
-                <DatePicker
+                <DatePicker 
+                sx={{'& .MuiInputLabel-root': {color: 'black !important'},
+                '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+                '& .MuiOutlinedInput-root': {borderRadius: '0px'},
+                '& .Mui-selected': {backgroundColor: 'black !important'}}}
                   label="CREATION DATE"
                   value={creationDate}
                   onChange={(newValue) => setCreationDate(newValue)}
                 />
                 <DatePicker
+                sx={{'& .MuiInputLabel-root': {color: 'black !important'},
+                '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+                '& .MuiOutlinedInput-root': {borderRadius: '0px'}}}
                   label="APPROVAL DATE"
                   value={approvalDate}
                   onChange={(newValue) => setApprovalDate(newValue)}
@@ -222,7 +221,7 @@ const BuildingPermits = () => {
           
           <Button size="lg" variant="plain"  color="neutral"
             sx={{'border-radius': 0 ,backgroundColor: "black" ,height: "4em", color: "white"}}>
-              SUBMIT
+              SEARCH
               </Button>
           </Stack>
           
@@ -242,8 +241,12 @@ const BuildingPermits = () => {
           <TableRow>
             <TableCell style={{width: '5em'}} align='left' />
             <TableCell align='left'>ID</TableCell>
-            <TableCell >NAME</TableCell>
+            <TableCell align='left' style={{width: '30em'}} >NAME</TableCell>
+            <TableCell align='right'>PROJECT MANAGER</TableCell>
+            <TableCell align="right">CREATION DATE</TableCell>
+            <TableCell align="right">APPROVAL DATE</TableCell>
             <TableCell align="right">STATUS</TableCell>
+            <TableCell align='right'></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

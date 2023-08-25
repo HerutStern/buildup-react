@@ -16,65 +16,22 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { InputBase, alpha, styled } from '@mui/material';
 import { SetUserContext, UserContext } from '../Context/UserContext';
 
-const settings = ['Login', 'Signup', 'Logout'];
+const settings = ['LOGIN', 'SIGNUP', 'LOGOUT'];
   const settingsMapping = {
     Home: '/',
-    'Login': '/login',
-    'Signup': '/signup',
-    'Logout': '/'
+    'LOGIN': '/login',
+    'SIGNUP': '/signup',
+    'LOGOUT': '/'
   }
 
 
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(1),
-//     width: 'auto',
-//   },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('sm')]: {
-//       width: '12ch',
-//       '&:focus': {
-//         width: '20ch',
-//       },
-//     },
-//   },
-// }));
-
-
-const pages = ['Home', 'Building Permits', 'SEND A New Building Permit', 'BUILDING PERMIT  requirements', 'Files']
+const pages = ['HOME', 'BUILDING PERMITS', 'SEND A NEW BUILDING PERMIT', 'BUILDING PERMIT TEMPLATE', 'FILES']
   const pageMapping = {
-      'Home': '/',
-      'Building Permits': '/building-permits',
-      'SEND A New Building Permit': '/new-building-permit',
-      'BUILDING PERMIT  requirements': '/template',
-      'Files': '/files'
+      'HOME': '/',
+      'BUILDING PERMITS': '/building-permits',
+      'SEND A NEW BUILDING PERMIT': '/new-building-permit',
+      'BUILDING PERMIT TEMPLATE': '/template',
+      'FILES': '/files'
   }
 
   
@@ -107,6 +64,7 @@ const Header = () => {
   const handleCloseUserMenu = (setting) => {
     navigate(settingsMapping[setting])
     if (setting==='Logout'){
+      localStorage.removeItem('token')
       setUser(
         {user: {}}
       )
@@ -115,7 +73,8 @@ const Header = () => {
     setAnchorElUser(null);
   };
 
-
+// https://storage.googleapis.com/buildup/buildupS.jpg
+// https://i.ibb.co/HVdMP5P/buildup2.jpg
     return(
       <>
         <AppBar position="static" style={{boxShadow: 'none'}} sx={{background: 'white'}}>
@@ -147,7 +106,7 @@ const Header = () => {
                 horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => setAnchorElNav(null)}
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
@@ -178,9 +137,9 @@ const Header = () => {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { paddingLeft: "5em", xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { paddingLeft: "2em", xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button style={{ color: 'grey', fontSize: "0.9em" }}
+              <Button style={{ color: 'grey', fontSize: "0.7em" }}
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
                 sx={{ padding: "1.5em",my: 2, color: 'white', display: 'block' }}
@@ -193,24 +152,24 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <PersonOutlineIcon style={{padding: "2em", fill: 'black' }} />
+                <PersonOutlineIcon style={{padding: "1em", fill: 'black' }} />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '-10px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'center',
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              onClose={() => setAnchorElUser(null)}
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>

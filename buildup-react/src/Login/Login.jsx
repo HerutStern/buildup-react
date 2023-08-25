@@ -1,7 +1,5 @@
-import Button from "@mui/material/Button";
+import {Button} from '@mui/joy';
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -51,8 +49,10 @@ const Login = () => {
           alignItems: "center",
         }}
       >
+        <img style={{ height: "auto", width: "20em"}}
+               src="https://i.ibb.co/HVdMP5P/buildup2.jpg" alt="buildup" border="0"/>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -66,6 +66,10 @@ const Login = () => {
             autoFocus
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            sx={{'& .MuiInputLabel-root': {color: 'black !important'},
+            '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+            '& .MuiOutlinedInput-root': {borderRadius: '0px'}
+            }}  
           />
           <TextField
             margin="normal"
@@ -78,27 +82,33 @@ const Login = () => {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            sx={{'& .MuiInputLabel-root': {color: 'black !important'},
+            '& .MuiOutlinedInput-notchedOutline': {borderColor: 'black !important'},
+            '& .MuiOutlinedInput-root': {borderRadius: '0px'}
+            }}
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            size="lg"
+            variant="plain"  
+            color="neutral"
+            sx={{ mt: 3, mb: 2, backgroundColor: "black",color: "white",borderRadius: '0px' }}
           >
-            Sign In
+            Log In
           </Button>
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2" sx={{color: "black"}}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

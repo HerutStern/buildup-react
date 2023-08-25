@@ -3,15 +3,17 @@ import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
 import { Stack } from '@mui/material';
 
+//  flexWrap={{xs: 'wrap', lg: 'nowrap'}}
+// width={{xs: '100%', lg:'50%'}}
 
 const NewBuildingPermit = () => {
   return(
     <>
-      <Stack direction={"row"} justifyContent={"space-evenly"}>
-        <Typography sx={{paddingRight: "3em"}} level="display2" variant="plain" >
+      <Stack direction={{lg: "row",md: "row", xs: "column"}} justifyContent={"space-evenly"} >
+        <Typography level="display2" variant="plain" >
           SEND A NEW BUILDING PERMIT
         </Typography>
-        <div style={{width: "90em" ,backgroundColor: "black"}}>
+        <div style={{width: "100%" ,backgroundColor: "black"}} >
           <p style={{color: "white",padding: "2em"}}>SECTIONS:</p>
           <p style={{color: "white",padding: "2em"}}>FILES:</p>
         </div>
