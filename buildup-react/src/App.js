@@ -1,12 +1,12 @@
 import './App.css';
 import { Outlet } from 'react-router-dom';
-import Header from './Header/Header';
 import { Stack } from '@mui/material';
-import Contact from './Contact/Contact';
 import { useContext, useEffect } from 'react';
 import { SetUserContext } from './Context/UserContext';
 import { USER_URL } from './infra/urls';
 import axios from 'axios';
+import ContactUs from './Components/PageFrame/ContactUs/ContactUs';
+import Header from './Components/PageFrame/Header/Header';
 
 
 function App() {
@@ -31,11 +31,11 @@ function App() {
   )
   return (
     <>
-        <Header/>
+        <Header />
         <Stack paddingLeft={"5em"} paddingRight={"5em"} paddingBottom={"10em"} paddingTop={"2em"}>
           <Outlet />
         </Stack>
-        <Contact/>
+        <ContactUs />
     </>
   );
 }

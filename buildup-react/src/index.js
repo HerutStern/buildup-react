@@ -4,15 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import BuildingPermits from './BuildingPermits/BuildingPermits';
-import NewBuildingPermit from './NewBuildingPermit/NewBuildingPermit';
-import Home from './Home/Home';
-import Files from './Files/Files';
-import Template from './Template/Template';
-import Login from './Login/Login';
-import Signup from './Signup/Signup';
 import UserProvider from './Context/UserContext';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import Home from './Components/Pages/Home/Home';
+import Files from './Components/Pages/Files/Files';
+import Signup from './Components/UserPages/Signup/Signup';
+import Login from './Components/UserPages/Login/Login';
+import Template from './Components/Pages/Template/Template';
+import NewBuildingPermit from './Components/Pages/NewBuildingPermit/NewBuildingPermit';
+import BuildingPermits from './Components/Pages/BuildingPermits/BuildingPermits';
+import axios from 'axios';
+
+
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  }
+)
 
 const router = createBrowserRouter([
   {
@@ -25,7 +37,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/building-permits',
-        element: <BuildingPermits/>
+        element: <BuildingPermits />
       },
       {
         path: '/new-building-permit',
@@ -43,35 +55,56 @@ const router = createBrowserRouter([
 ]},
   {
           path: '/login',
-          element: <Login/>
+          element: <Login />
         },
         {
           path: '/signup',
-          element: <Signup/>
+          element: <Signup />
         }
 ])
 
-// const myTheme = {
-//   palette: {
-//     primary: {
-//       main: '#000000',
-//     },
-//     secondary: {
-//       main: '#808080',
-//     },
-//   },
-  
-// }
+const myTheme = {
+  palette: {
+    mode: 'light'
+  ,
+    primary: {
+      main: '#000000', //black (for white background)
+    },
+    secondary: {
+      main: '#808080', //grey
+    },
+    info: {
+      main: '#FFFFFF' //white (for black background)
+    }
+  },
+  // button: {
+  //   borderRadius: '0px'
+  // },
+  typography: {
+    caption: {
+      'text-transform': 'uppercase'
+    },
+    h3: {
+      'text-transform': 'uppercase'
+    },
+    h2: {
+      'text-transform': 'uppercase'
+    },
+    h1: {
+      'text-transform': 'uppercase'
+    }
+  }
+}
 
-// const theme = createTheme(myTheme);
+const theme = createTheme(myTheme);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <ThemeProvider theme={theme}>
-  // <CssBaseline />
+  <ThemeProvider theme={theme}>
+  <CssBaseline />
   <UserProvider>
     <RouterProvider router={router} />
   </UserProvider>
-  // </ThemeProvider>
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
