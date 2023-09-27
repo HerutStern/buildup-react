@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material"
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import FileUploadSharpIcon from '@mui/icons-material/FileUploadSharp';
 
 
 const NewBiuldingPermitFiles = () => {
@@ -31,7 +31,7 @@ const NewBiuldingPermitFiles = () => {
             <Typography  color={'primary'} variant="caption">
                 {file.name}
             </Typography>
-            <FileUploadOutlinedIcon color={'primary'} />
+            <FileUploadSharpIcon color={'primary'} />
             
           </Stack>
           <input type="file"

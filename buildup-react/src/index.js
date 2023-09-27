@@ -14,6 +14,7 @@ import Template from './Components/Pages/Template/Template';
 import NewBuildingPermit from './Components/Pages/NewBuildingPermit/NewBuildingPermit';
 import BuildingPermits from './Components/Pages/BuildingPermits/BuildingPermits';
 import axios from 'axios';
+import Notification from './Components/Notification/Notification';
 
 
 axios.interceptors.request.use(
@@ -54,13 +55,13 @@ const router = createBrowserRouter([
       
 ]},
   {
-          path: '/login',
-          element: <Login />
-        },
-        {
-          path: '/signup',
-          element: <Signup />
-        }
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/signup',
+    element: <Signup />
+  }
 ])
 
 const myTheme = {
@@ -101,9 +102,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
   <CssBaseline />
-  <UserProvider>
-    <RouterProvider router={router} />
-  </UserProvider>
+    <UserProvider>
+      <Notification>
+        <RouterProvider router={router} />
+      </Notification>
+    </UserProvider>
   </ThemeProvider>
 );
 

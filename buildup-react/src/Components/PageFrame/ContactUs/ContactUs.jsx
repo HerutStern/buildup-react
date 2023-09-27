@@ -1,28 +1,47 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Divider, Stack, Tooltip, Typography } from '@mui/material';
+import MailOutlineSharpIcon from '@mui/icons-material/MailOutlineSharp';
+
+
+// &nbsp; => space
 
 const ContactUs = () => {
   return(
-    <>
-    <AppBar position="fixed" style={{boxShadow: 'none'}} 
-    sx={{background: 'white',  top: '94%', bottom: 0 }}>
+    <AppBar 
+      position="fixed" 
+      sx={{
+        boxShadow: 'none', 
+        background: 'white',  
+        top: '94%', 
+        bottom: 0
+      }}
+    >
       <Divider />
-      <Stack style={{paddingTop: '0.4em'}} direction="row" alignItems={"center"} justifyContent={"center"}>
-        <Typography color='primary' variant="caption" style={{"white-space": "pre"}} 
-        sx={{'fontWeight': 600}}  >
-          CONTACT US
+      <Stack 
+        sx={{paddingTop: '0.4em'}} 
+        direction="row" 
+        alignItems={"center"} 
+        justifyContent={"center"}
+      >
+
+        {/* Text */}
+        <Typography 
+          color='primary' 
+          variant="caption" 
+          sx={{"white-space": "pre", 'fontWeight': 600}}
+        >
+          CONTACT US &nbsp;
         </Typography>
+
+        {/* Link (mail icon) */}
         <Tooltip title="SEND AN EMAIL TO BUILDUP">
-          <a style={{paddingLeft: "0.5em"}} href="mailto:buildupbuildingpermits@gmail.com">
-            <MailOutlineIcon fontSize="small" style={{fill: "black"}}/>
-        </a>
+          <a href="mailto:buildupbuildingpermits@gmail.com">
+            <MailOutlineSharpIcon fontSize="small" color='primary'/>
+          </a>
         </Tooltip>
-        
       </Stack>
-      </AppBar>
-    </>
+    </AppBar>
   )
 }
 

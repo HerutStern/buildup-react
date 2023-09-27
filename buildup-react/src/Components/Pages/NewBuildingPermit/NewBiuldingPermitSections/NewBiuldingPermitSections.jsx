@@ -23,7 +23,7 @@ const Sections = () => {
           <TextField 
           label={section.name}
           color="primary" 
-          variant="outlined" 
+          variant="standard" 
           size='small'
           sx={{
             '& .MuiOutlinedInput-root': {borderRadius: '0px'}

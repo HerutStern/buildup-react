@@ -1,0 +1,10 @@
+
+.welcome {
+  font-weight: 800 !important;
+}
+
+.logo-home {
+  padding-top: 7%;
+  height: 19em;
+  object-fit: contain;
+}

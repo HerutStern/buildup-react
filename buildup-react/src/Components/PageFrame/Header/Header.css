@@ -1,0 +1,12 @@
+
+.logo-header {
+  padding: 2em;
+  height: auto;
+  width: 10em;
+  object-fit: contain;
+}
+
+.menu-text {
+  font-size: 0.7em !important;
+  display: block !important;
+}

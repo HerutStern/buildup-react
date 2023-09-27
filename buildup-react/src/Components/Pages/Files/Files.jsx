@@ -1,99 +1,87 @@
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import { Box, Button, Divider, IconButton, LinearProgress, Stack, TextField, Tooltip, Typography } from "@mui/material";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from 'react';
+import { Stack, Typography } from "@mui/material";
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { GET_COMPANY_FILES_URL, CREAT_COMPANY_FILES_URL } from '../../../infra/urls';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { COMPANY_FILE_URL } from '../../../infra/urls';
 import Upload from './Upload/Upload';
+import FilesList from './FilesList/FilesList';
+import './Files.css';
+import { UserContext } from "../../../Context/UserContext";
+
 
 const Files = () => {
-  const [filesList, setFilesList] = useState([])
 
-
-
-  
-
-  const fetchData = async () => {
-        try{
-        // event.preventDefault();
-      const response = 
-        await axios.get(GET_COMPANY_FILES_URL)
-        console.log(response.data.results)
-        setFilesList(response.data.results)
-
-      }
-      catch(error){
-        console.log(error)
-
-      }
-  };
+  // User context and company manager state - 
+  const [companyManager, setCompanyManager] = useState(false);
+  const user = useContext(UserContext);
 
   useEffect(() => {
-    
+    if (user?.user?.profile?.role === 'COMPANY_MANAGER') {
+      console.log(user.user.profile.role);
+      setCompanyManager(true);
+    }
+  }, [user.user]);
+
+
+  // Files list state - 
+  const [filesList, setFilesList] = useState({files: []})
+
+  // Page state - 
+  const [next, setNext] = useState(null)
+
+  // COMPANY FILES LIST (GET) - 
+  const fetchData = async () => {
+    let url = COMPANY_FILE_URL
+        if (filesList.files.length > 0) {
+          url = next
+        }
+    try{
+      const response = await axios.get(url)
+      console.log(response.data.results)
+
+      // Updating the list of the files to the page - 
+      setFilesList({files: [...filesList.files, ...response.data.results]})
+      // Updating page - 
+      setNext(response.data.next)
+    }
+
+    catch(error){
+      console.log(error)
+    }
+  };
+  useEffect(() => {
     fetchData()
   },['']) 
-
  
-
   return(
     <>
-      <Stack spacing={'4%'} direction="column" alignItems={"center"}>
-      <Stack direction={'column'} alignItems={"center"} spacing={'6%'}>
-        <Typography color={'primary'} variant="h3" style={{'text-align': 'center', 'fontWeight': 800}}>
-        COMPANY FILES</Typography>
-        <Upload fetchData={fetchData}/>
-      </Stack>
-      
-      <Stack direction={'column'} spacing={'1%'}>
-        {
+      <Stack 
+        spacing={{lg: '4%', md: '4%', xs: '14%'}} 
+        direction="column" 
+        alignItems={"center"}
+      > 
+        <Stack direction={'column'} alignItems={"center"} spacing={'10%'}>
+
+          {/* Title */}
+          <Typography 
+            color={'primary'} 
+            variant="h3" 
+            className="title" 
+            sx={{fontWeight: 800}}
+          >
+            COMPANY FILES
+          </Typography>
+
+          {/* Upload component */}
+          {
+          companyManager // Only company manager can upload files 
+          &&
+          <Upload fetchData={fetchData}/>
+          }
+        </Stack>
         
-        filesList.map((fileData) => (
-          
-            <>
-            <Box  sx={{width: "auto"}}>
-            <Stack direction={"row"} alignItems={'center'} justifyContent={'center'}>
-              <Typography  variant="caption" width={'100%'} color={'primary'}>
-                {fileData.name}</Typography>
-              <Tooltip title="RENAME">
-                <IconButton >
-                <DriveFileRenameOutlineIcon color='primary'/>
-              </IconButton>
-              </Tooltip>
-              
-              <Tooltip title="DELETE">
-                <IconButton>
-                  <DeleteIcon color='primary'/>
-                </IconButton>
-              </Tooltip>
-
-              <Tooltip title="DOWNLOAD">
-                <Button component="label">
-                  <a href={fileData.link}
-                  target="_blank" download>
-                      <FileDownloadOutlinedIcon  color={'primary'}/>
-                  </a>
-                </Button>
-              </Tooltip>
-              
-              
-              
-              </Stack>
-              </Box> 
-            </>
-          
-        ))
-}
+        {/* Files list component */}
+        <FilesList next={next} companyManager={companyManager} fetchData={fetchData} filesList={filesList.files}/>
       </Stack>
-{/*         
-        <Button onClick={saveFile} variant='contained'
-            color="primary"
-            sx={{width: '20%', borderRadius: '0px'}}>
-        save
-      </Button> */}
-      </Stack>
-
     </>
   );
 }

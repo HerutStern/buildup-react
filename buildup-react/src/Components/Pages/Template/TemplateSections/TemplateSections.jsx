@@ -3,16 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
 
-const TemplateSections = () => {
-
-    const sections = [{
-      id: 'id 1',
-      name: 'section 1'
-    },{
-      id: 'id 2',
-      name: 'section 2'
-    }
-  ]
+const TemplateSections = ({sections}) => {
 
 
 

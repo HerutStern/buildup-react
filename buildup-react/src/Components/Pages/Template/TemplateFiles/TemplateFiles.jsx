@@ -2,19 +2,8 @@ import { Button, Stack, TextField, Tooltip, Typography } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const TemplateFiles = () => {
+const TemplateFiles = ({files}) => {
 
-  const files = [{
-    id: 'id 1',
-    name: 'file 1'
-  },{
-    id: 'id 2',
-    name: 'file 2'
-  },{
-    id: 'id 3',
-    name: 'file 3 bla bla bla bla'
-  }
-]
 
   return(
     <Stack direction={'column'} alignItems={'flex-start'} spacing={'10%'}>
