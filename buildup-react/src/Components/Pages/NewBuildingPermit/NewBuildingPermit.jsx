@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material';
 import NewBiuldingPermitSections from './NewBiuldingPermitSections/NewBiuldingPermitSections';
 import NewBiuldingPermitFiles from './NewBiuldingPermitFiles/NewBiuldingPermitFiles';
 import NewBuildingPermitName from './NewBuildingPermitName/NewBuildingPermitName';
@@ -10,6 +10,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 const NewBuildingPermit = () => {
+
+  // Page and loader states - 
+  const [loadingMode, setLoadingMode] = useState(false)
 
   // Navigate - 
   const navigate = useNavigate()
@@ -59,6 +62,9 @@ const NewBuildingPermit = () => {
     // Send a new building permit handler - 
     const handleSend = async() => {
       try{
+        // Loader on - 
+        setLoadingMode(true)
+
         // Checking that all sections and files were provided - 
         if(
           sections.length === Object.keys(buildingPermitSections).length 
@@ -165,6 +171,9 @@ const NewBuildingPermit = () => {
           }
         )
         console.log(error)
+      } finally{
+        // Loader off - 
+        setLoadingMode(false)
       }
     }
 
@@ -208,6 +217,7 @@ const NewBuildingPermit = () => {
 
       {/* Send button */}
       <Button 
+        disabled={loadingMode}
         onClick={handleSend}
         type="submit"
         size="lg"
@@ -218,8 +228,16 @@ const NewBuildingPermit = () => {
           borderRadius: '0px'
         }}
       >
-          SEND
-        </Button>
+        SEND
+      </Button>
+      {/* Loader -  */}
+      { 
+        loadingMode 
+        && 
+        <Box sx={{ width: '50%' }}>
+          <LinearProgress />
+        </Box> 
+      }
     </Stack>
   )
 }

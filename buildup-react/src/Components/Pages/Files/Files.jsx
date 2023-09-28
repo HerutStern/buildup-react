@@ -21,8 +21,9 @@ const Files = () => {
     if (user?.user?.profile?.role === 'COMPANY_MANAGER') {
       // console.log(user.user.profile.role);
       setCompanyManager(true);
-      fetchData()
+      
     }
+    fetchData()
   }, [user.user]);
 
 
