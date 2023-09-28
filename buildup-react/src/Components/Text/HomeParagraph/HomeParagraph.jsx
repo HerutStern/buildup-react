@@ -8,7 +8,7 @@ const HomeParagraph = () => {
     <Typography 
       paragraph={true} 
       align="justify" 
-      color={'secondary'} 
+      color={'primary'} 
       variant="caption" 
     >
       Meet BuildUp! Your building permit manager, 

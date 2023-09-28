@@ -1,17 +1,13 @@
 import { Stack, TextField } from "@mui/material"
-import { useState } from "react"
 
 
-const NewBuildingPermitName = () => {
+const NewBuildingPermitName = ({name, setNmae}) => {
 
-const [name, setNmae] = useState()
 
-return(
-  <>
-  <Stack width={'100%'} direction={'column'} spacing={'10%'} >
-      <>
-     
-        <TextField
+  return(
+    <Stack width={'100%'} direction={'column'} spacing={'10%'} >
+      {/* Name input */}
+      <TextField
         label={'PROJECT NAME'} 
         value={name}
         color="primary" 
@@ -20,15 +16,10 @@ return(
         sx={{
           '& .MuiOutlinedInput-root': {borderRadius: '0px'}, 
         }}
-         /> 
-      
-      </>
-
-  </Stack>
-    
-        
-  </>
-)
+        onChange={(event)=> setNmae(event.target.value)}
+      /> 
+    </Stack>
+  )
 }
 
 export default NewBuildingPermitName

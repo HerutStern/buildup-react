@@ -31,6 +31,8 @@ const FileDetails = ({fileData, fetchData, companyManager}) => {
     try{
       event.preventDefault();
 
+      setOpen(false)
+
       // Start loading mode - 
       setLoadingMode(true) 
 
@@ -47,7 +49,7 @@ const FileDetails = ({fileData, fetchData, companyManager}) => {
         setNotification(
           {
             open: true, 
-            msg: `FILE WAS DELETED`, 
+            msg: `THE FILE HAS BEEN DELETED`, 
             severity: 'info'
           }
         )
@@ -67,7 +69,6 @@ const FileDetails = ({fileData, fetchData, companyManager}) => {
     }
 
     finally{
-      // fetchData()
       // End loading and edit mode - 
       setLoadingMode(false)
     }
@@ -121,14 +122,14 @@ const FileDetails = ({fileData, fetchData, companyManager}) => {
         yesFunction={deleteFile} 
       />
 
-      <Stack width={'100%'} direction={'column'}>
+      <Stack width={'100%'} direction={'column'} alignItems={'center'}>
         {
           // On edit mode the edit line will be displayed, otherwise the file will be displayed
           editMode
 
           ?
           // File edit line - 
-          (<Stack direction={'row'} alignItems={'center'}>
+          <Stack direction={'row'} alignItems={'center'}>
             
             {/* Name input - */}
             <TextField 
@@ -155,11 +156,15 @@ const FileDetails = ({fileData, fetchData, companyManager}) => {
                 <CloseSharpIcon color="primary"/>
               </Button>
             </Tooltip>
-          </Stack> )
+          </Stack>
 
           : 
           // File display line - 
-          (<Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+          <Stack 
+            width={'100%'}
+            direction={'row'} 
+            alignItems={'center'}
+          >
 
             {/* File name - */}
             <Typography 
@@ -170,41 +175,42 @@ const FileDetails = ({fileData, fetchData, companyManager}) => {
               {fileData.name}
             </Typography>
 
-            {/* Rename button - */}
-            {
-              companyManager // Only company manager can rename files 
-              && 
-              <Tooltip title="RENAME">
-                <IconButton disabled={loadingMode} onClick={() => setEditMode(true)}>
-                  <DriveFileRenameOutlineSharpIcon color='primary'/>
-                </IconButton>
+            <Stack paddingLeft={3} direction={'row'}>
+              {/* Rename button - */}
+              {
+                companyManager // Only company manager can rename files 
+                && 
+                <Tooltip title="RENAME">
+                  <IconButton disabled={loadingMode} onClick={() => setEditMode(true)}>
+                    <DriveFileRenameOutlineSharpIcon color='primary'/>
+                  </IconButton>
+                </Tooltip>
+              }
+              {/* Delete button - */}
+              {
+                companyManager // Only company manager can delete files 
+                && 
+                <Tooltip title="DELETE">
+                  <IconButton disabled={loadingMode} onClick={() => setOpen(true)}>
+                    <DeleteSharpIcon color='primary'/>
+                  </IconButton>
+                </Tooltip>
+              }
+              
+              {/* Download button - */}
+              <Tooltip title="DOWNLOAD">
+                <Button disabled={loadingMode} component="label">
+                  <a 
+                    href={fileData.link}
+                    target="_blank" 
+                    download
+                  >
+                    <DownloadSharpIcon  color={'primary'}/>
+                  </a>
+                </Button>
               </Tooltip>
-            }
-
-            {/* Delete button - */}
-            {
-              companyManager // Only company manager can delete files 
-              && 
-              <Tooltip title="DELETE">
-                <IconButton disabled={loadingMode} onClick={() => setOpen(true)}>
-                  <DeleteSharpIcon color='primary'/>
-                </IconButton>
-              </Tooltip>
-            }
-            
-            {/* Download button - */}
-            <Tooltip title="DOWNLOAD">
-              <Button disabled={loadingMode} component="label">
-                <a 
-                  href={fileData.link}
-                  target="_blank" 
-                  download
-                >
-                  <DownloadSharpIcon  color={'primary'}/>
-                </a>
-              </Button>
-            </Tooltip>
-          </Stack>)
+            </Stack>
+          </Stack>
         }
 
         {/* Loader -  */}

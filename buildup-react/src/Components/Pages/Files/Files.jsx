@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { COMPANY_FILE_URL } from '../../../infra/urls';
@@ -14,44 +14,42 @@ const Files = () => {
   const [companyManager, setCompanyManager] = useState(false);
   const user = useContext(UserContext);
 
+  // Page and loader states - 
+  const [loadingMode, setLoadingMode] = useState(false)  
+
   useEffect(() => {
     if (user?.user?.profile?.role === 'COMPANY_MANAGER') {
-      console.log(user.user.profile.role);
+      // console.log(user.user.profile.role);
       setCompanyManager(true);
+      fetchData()
     }
   }, [user.user]);
 
 
   // Files list state - 
-  const [filesList, setFilesList] = useState({files: []})
+  const [filesList, setFilesList] = useState([])
 
-  // Page state - 
-  const [next, setNext] = useState(null)
 
   // COMPANY FILES LIST (GET) - 
   const fetchData = async () => {
-    let url = COMPANY_FILE_URL
-        if (filesList.files.length > 0) {
-          url = next
-        }
     try{
-      const response = await axios.get(url)
+      // Loader - 
+      setLoadingMode(true)
+
+      // GET
+      const response = await axios.get(COMPANY_FILE_URL)
       console.log(response.data.results)
 
       // Updating the list of the files to the page - 
-      setFilesList({files: [...filesList.files, ...response.data.results]})
-      // Updating page - 
-      setNext(response.data.next)
+      setFilesList(response.data.results)
+      setLoadingMode(false)
     }
-
     catch(error){
       console.log(error)
     }
   };
-  useEffect(() => {
-    fetchData()
-  },['']) 
- 
+
+
   return(
     <>
       <Stack 
@@ -59,7 +57,7 @@ const Files = () => {
         direction="column" 
         alignItems={"center"}
       > 
-        <Stack direction={'column'} alignItems={"center"} spacing={'10%'}>
+        <Stack direction={'column'} alignItems={"center"} spacing={'6%'}>
 
           {/* Title */}
           <Typography 
@@ -79,8 +77,17 @@ const Files = () => {
           }
         </Stack>
         
-        {/* Files list component */}
-        <FilesList next={next} companyManager={companyManager} fetchData={fetchData} filesList={filesList.files}/>
+        {/* Loader */}
+        {
+          loadingMode 
+          && 
+          <Box sx={{width: '50%'}}>
+            <LinearProgress />
+          </Box> 
+        }
+
+        {/* files list component */}
+        <FilesList companyManager={companyManager} fetchData={fetchData} filesList={filesList}/>
       </Stack>
     </>
   );

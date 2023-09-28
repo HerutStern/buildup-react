@@ -16,12 +16,16 @@ import { useContext } from 'react';
 import './Header.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { SetNotificationContext } from '../../../Context/NotificationContext';
   
 
 const Header = () => {
 
   // Navigate - 
   const navigate = useNavigate()
+
+  // Notification cotext - 
+  const setNotification = useContext(SetNotificationContext)
 
   // User context and company manager state - 
   const setUser = useContext(SetUserContext)
@@ -51,14 +55,14 @@ const Header = () => {
       pages = [
       'HOME', 'BUILDING PERMITS', 
       'SEND A NEW BUILDING PERMIT', 'BUILDING PERMIT TEMPLATE', 
-      'FILES'
+      'COMPANY FILES'
     ]
     } else{ // If the user is a project manager,
             // hide 'BUILDING PERMIT TEMPLATE' page option - 
       pages = [
         'HOME', 'BUILDING PERMITS', 
         'SEND A NEW BUILDING PERMIT', 
-        'FILES'
+        'COMPANY FILES'
       ]
     }
   } else{ // If the user is not loged in, set only:
@@ -70,7 +74,7 @@ const Header = () => {
     'BUILDING PERMITS': '/building-permits',
     'SEND A NEW BUILDING PERMIT': '/new-building-permit',
     'BUILDING PERMIT TEMPLATE': '/template',
-    'FILES': '/files'
+    'COMPANY FILES': '/files'
   }
 
   // User pages - 
@@ -112,6 +116,14 @@ const Header = () => {
       localStorage.removeItem('token')
       setUser(
         {user: {}}
+      )
+      // Info notification - 
+      setNotification(
+        {
+          open: true, 
+          msg: "YOU ARE LOGED OUT", 
+          severity: 'info'
+        }
       )
     }
     console.log(user)

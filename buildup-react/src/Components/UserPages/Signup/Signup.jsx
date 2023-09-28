@@ -13,6 +13,8 @@ import { Button } from '@mui/material';
 import '../UserPages.css';
 import SignupParagraph from '../../Text/SignupParagraph/SignupParagraph';
 import { useEffect } from 'react';
+import { useContext } from 'react';
+import { SetNotificationContext } from '../../../Context/NotificationContext';
 
 const Signup = () => {
 
@@ -23,6 +25,9 @@ const Signup = () => {
       'href', 'https://storage.googleapis.com/buildup/buildupS.jpg'
     )
   }, [])
+
+  // Notification cotext - 
+  const setNotification = useContext(SetNotificationContext)
 
   // Navigate - 
   const navigate = useNavigate()
@@ -45,11 +50,28 @@ const Signup = () => {
         }
       )
       console.log(response)
-
+      
+      // Success notification -
+      setNotification(
+        {
+          open: true, 
+          msg: "YOU ARE SIGNED UP - NOW YOU CAN LOG IN", 
+          severity: 'success'
+        }
+      )
       // Move directly to login
       navigate('/login')
     }
     catch(error){
+      // Error notification - 
+      setNotification(
+        {
+          open: true, 
+          msg: `ERROR - MAKE SURE THE EVERYTHING IS CORRECT`, 
+          error: `${error.message}`,
+          severity: 'warning'
+        }
+      )
       console.log(error)
     }
   };

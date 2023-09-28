@@ -12,6 +12,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../UserPages.css';
 import { useEffect } from "react";
+import { SetNotificationContext } from "../../../Context/NotificationContext";
 
 
 const Login = () => {
@@ -24,6 +25,9 @@ const Login = () => {
     )
   }, [])
 
+  // Notification cotext - 
+  const setNotification = useContext(SetNotificationContext)
+
   // Navigate - 
   const navigate = useNavigate()
 
@@ -34,26 +38,48 @@ const Login = () => {
 
   // Handle Login (GET) - 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const response = 
-      await axios.post(LOGIN_URL, {username: username, password: password})
-    console.log(response)
+    try{
+      event.preventDefault();
+      const response = 
+        await axios.post(LOGIN_URL, {username: username, password: password})
+      console.log(response)
 
-    // Save user to local storage - 
-    localStorage.setItem('token', response.data.access)
-    
-    // Set user context - 
-    const token = localStorage.getItem('token')
-    const userResponse = await axios.get(USER_URL, 
-      {headers: {Authorization: `Bearer ${token}`}})
-    // console.log(userResponse)
-    setUser({
-      user: {...userResponse.data}
-    })
+      // Save user to local storage - 
+      localStorage.setItem('token', response.data.access)
+      
+      // Set user context - 
+      const token = localStorage.getItem('token')
+      const userResponse = await axios.get(USER_URL, 
+        {headers: {Authorization: `Bearer ${token}`}})
+      // console.log(userResponse)
+      setUser({
+        user: {...userResponse.data}
+      })
 
-    // Navigate to home page - 
-    navigate('/')
-  };
+      // Success notification -
+      setNotification(
+        {
+          open: true, 
+          msg: "YOU ARE LOGED IN", 
+          severity: 'success'
+        }
+      )
+      // Navigate to home page - 
+      navigate('/')
+    }catch(error){
+      // Error notification - 
+      setNotification(
+        {
+          open: true, 
+          msg: `ERROR - MAKE SURE YOUR USER NAME AND PASSWORD ARE CORRECT`, 
+          error: `${error.message}`,
+          severity: 'warning'
+        }
+      )
+      console.log(error)
+    }
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">

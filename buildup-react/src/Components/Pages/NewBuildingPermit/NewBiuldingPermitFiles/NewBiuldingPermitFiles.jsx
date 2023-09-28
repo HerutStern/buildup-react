@@ -1,53 +1,62 @@
-import { Stack, Typography } from "@mui/material"
+import { List, Stack, Typography } from "@mui/material"
 import FileUploadSharpIcon from '@mui/icons-material/FileUploadSharp';
+import './NewBiuldingPermitFiles.css'
 
 
-const NewBiuldingPermitFiles = () => {
+const NewBiuldingPermitFiles = ({files, setBuildingPermitFiles}) => {
 
-  const files = [{
-    id: 'id 1',
-    name: 'file 1'
-  },{
-    id: 'id 2',
-    name: 'file 2'
-  },{
-    id: 'id 3',
-    name: 'file 3 bla bla bla bla'
+  // file upload handler - 
+  const handleFileLink = (event, file_template) => {
+    if (event.target.files) {
+    setBuildingPermitFiles((prevState) => ({
+      ...prevState,
+      [file_template]: event.target.files[0]
+    }));
+    }
   }
-]
 
   return(
-    <>
-        <Stack  direction={'column'} spacing={'15%'}>
-          {files.map((file) => (
-        <Stack style={{width: '100%'}} direction={"column"} alignItems={'flex-start'} >
-        <div style={{
-          position:"relative",
-          "text-align":"start",
-          cursor:"pointer"
-          }}
-        >
-          <Stack  justifyContent={"center"} alignItems={"center"} direction={"row"} spacing={"1em"}>
-            <Typography  color={'primary'} variant="caption">
-                {file.name}
-            </Typography>
-            <FileUploadSharpIcon color={'primary'} />
-            
-          </Stack>
-          <input type="file"
-          style={{position: "absolute",
-            opacity: 0,
-            cursor: "pointer",
-            right: 0,
-            top: 0}} />
-        </div>
-      </Stack>
-      ))}
-        </Stack>
-
-      
-      
-    </>
+    <Stack 
+      width={{lg:'20%', md: '25%'}} 
+      direction={'column'} 
+      alignItems={'center'}
+    >
+      <List sx={{maxWidth: '100%', padding: 0}}>
+        {
+          // Files list - 
+          files.map((file) => (
+            <div style={{ 
+              position:"relative",
+              "text-align":"start",
+              cursor:"pointer"
+              }}
+            >
+              <Stack 
+                width={'13em'} 
+                paddingBottom={3} 
+                spacing={'1%'}
+                direction={'row'} 
+                alignItems={'space-between'}
+              >
+                {/* File name */}
+                <Typography  width={'100%'} color={'primary'} variant="caption">
+                  {file.name} *
+                </Typography>
+                {/* File upload input */}
+                <FileUploadSharpIcon color={'primary'} />
+                <Stack>
+                  <input 
+                    className="file-input"
+                    type="file" 
+                    onChange={(event) => handleFileLink(event, file.id)}
+                  />
+                </Stack>
+              </Stack>    
+            </div>
+          ))
+        } 
+      </List>
+    </Stack>
   )
 }
 

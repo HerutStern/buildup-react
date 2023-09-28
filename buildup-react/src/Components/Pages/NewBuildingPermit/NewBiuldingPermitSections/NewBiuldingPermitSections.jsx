@@ -1,42 +1,36 @@
 import { Stack, TextField } from "@mui/material"
 
-const Sections = () => {
+const Sections = ({sections, setBuildingPermitSections}) => {
 
-    const sections = [{
-      id: 'id 1',
-      name: 'section 1'
-    },{
-      id: 'id 2',
-      name: 'section 2'
-    }
-  ]
-
-
+  // New section handler - 
+  const handleSectionContent = (event, section_template) => {
+    const content = event.target.value
+    setBuildingPermitSections((prevState) => ({
+      ...prevState,
+      [section_template]: content,
+    }));
+  }
 
   return(
-    <>
-    <Stack direction={'column'} spacing={'10%'} >
+    <Stack width={{lg:'20%', md: '25%'}} direction={'column'} spacing={'10%'} >
       {
-      sections.map((section) => (
-        <>
-       
+        // Sections list
+        sections.map((section) => (   
+          // Section input -   
           <TextField 
-          label={section.name}
-          color="primary" 
-          variant="standard" 
-          size='small'
-          sx={{
-            '& .MuiOutlinedInput-root': {borderRadius: '0px'}
-          }}
-           /> 
-        
-        </>
-         
-      ))}
+            onChange={(event) => handleSectionContent(event, section.id)}
+            required
+            label={section.name}
+            color="primary" 
+            variant="outlined" 
+            size='small'
+            sx={{
+              '& .MuiOutlinedInput-root': {borderRadius: '0px'}
+            }}
+          /> 
+        ))
+      }
     </Stack>
-      
-          
-    </>
   )
 }
 

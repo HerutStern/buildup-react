@@ -95,7 +95,7 @@ const Upload = ({fetchData}) => {
               spacing={"1em"}
             >
 
-              <Typography>
+              <Typography sx={{fontWeight: 700}} color={'primary'}>
                 UPLOAD A NEW FILE
               </Typography>
 
